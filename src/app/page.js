@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 
-export default function Home() {
+export default function Auth() {
   return (
     <div class="d-flex align-items-center py-4 bg-body-tertiary h-100">
       <main className="form-signin w-100 m-auto">
