@@ -5,6 +5,10 @@ import { ObjectId } from 'mongodb';
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 
+import { SignJWT } from "jose";
+import { getJwtSecretKey } from "@/libs/auth_server";
+
+
 export async function doAuth(prevState, formData) {
 
     let _d
@@ -24,6 +28,25 @@ export async function doAuth(prevState, formData) {
         // store it in session
         const dbRes = await client.db('book').collection('session').insertOne(session_obj)
         if (dbRes) {
+
+            const token = await new SignJWT({
+                username: body.username,
+              })
+                .setProtectedHeader({ alg: "HS256" })
+                .setIssuedAt()
+                .setExpirationTime("30s") 
+                .sign(getJwtSecretKey());
+              const response = NextResponse.json(
+                { success: true },
+                { status: 200, headers: { "content-type": "application/json" } }
+              );
+              response.cookies.set({
+                name: "token",
+                value: token,
+                path: "/",
+              });
+
+              
             cookies().set("token", dbRes.insertedId, { httpOnly: true })
         }
 
@@ -51,6 +74,9 @@ export async function logOut() {
     }
     redirect(`/auth`, 'replace');
     return true;
+}
+export async function checkAuth(){
+
 }
 export async function authTokenValidate(token) {
     await _MongoClientPromise.then(async (client) => {

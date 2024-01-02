@@ -1,6 +1,6 @@
 "use client"
 
-import { doAuth } from '@/lib/auth'
+import { doAuth } from '@/lib/auth_server'
 import Link from 'next/link'
 
 export default function Auth() {

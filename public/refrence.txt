@@ -1,0 +1,1 @@
+https://www.makeuseof.com/token-authentication-nextjs-using-jwt/

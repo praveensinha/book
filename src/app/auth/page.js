@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useFormState } from 'react-dom'
 
 //import styles from './page.module.css'
-import {doAuth} from '@/lib/auth'
+import {doAuth} from '@/lib/auth_server'
  const   _validate = async (prevState, formData) => {
  
      var r = await doAuth(prevState, formData);

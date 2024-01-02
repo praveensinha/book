@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link'
-import { logOut } from '@/lib/auth'
+import { logOut } from '@/lib/auth_server'
 import { usePathname } from 'next/navigation'
 
 
