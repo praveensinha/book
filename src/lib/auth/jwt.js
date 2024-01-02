@@ -1,11 +1,11 @@
 import { jwtVerify } from "jose";
 
 export function getJwtSecretKey() {
-    const jwt_secret = process.env.NEXT_PUBLIC_JWT_SECRET_KEY;
-    if (!jwt_secret) {
+    const secret = process.env.NEXT_PUBLIC_JWT_SECRET_KEY;
+    if (!secret) {
         throw new Error("JWT Secret key is not matched");
     }
-    return new TextEncoder().encode(jwt_secret);
+    return new TextEncoder().encode(secret);
 }
 
 export async function verifyJwtToken(token) {

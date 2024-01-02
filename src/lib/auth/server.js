@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 
 import { SignJWT } from "jose";
-import { getJwtSecretKey } from "@/libs/auth_server";
+import { getJwtSecretKey } from "./jwt";
 
 
 export async function doAuth(prevState, formData) {
@@ -30,23 +30,13 @@ export async function doAuth(prevState, formData) {
         if (dbRes) {
 
             const token = await new SignJWT({
-                username: body.username,
-              })
+                username: dbRes.insertedId,
+            })
                 .setProtectedHeader({ alg: "HS256" })
                 .setIssuedAt()
-                .setExpirationTime("30s") 
+                .setExpirationTime("30s")
                 .sign(getJwtSecretKey());
-              const response = NextResponse.json(
-                { success: true },
-                { status: 200, headers: { "content-type": "application/json" } }
-              );
-              response.cookies.set({
-                name: "token",
-                value: token,
-                path: "/",
-              });
-
-              
+            cookies().set("token1", token, { httpOnly: true })
             cookies().set("token", dbRes.insertedId, { httpOnly: true })
         }
 
@@ -75,7 +65,7 @@ export async function logOut() {
     redirect(`/auth`, 'replace');
     return true;
 }
-export async function checkAuth(){
+export async function checkAuth() {
 
 }
 export async function authTokenValidate(token) {
