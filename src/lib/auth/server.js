@@ -34,10 +34,11 @@ export async function doAuth(prevState, formData) {
             })
                 .setProtectedHeader({ alg: "HS256" })
                 .setIssuedAt()
-                .setExpirationTime("30s")
+                .setExpirationTime("30d")
                 .sign(getJwtSecretKey());
-            cookies().set("token1", token, { httpOnly: true })
-            cookies().set("token", dbRes.insertedId, { httpOnly: true })
+
+            cookies().set("token", token, { httpOnly: true })
+            cookies().set("token1", dbRes.insertedId, { httpOnly: true })
         }
 
         _d = { error: false, 'rId': dbRes }
@@ -48,12 +49,12 @@ export async function doAuth(prevState, formData) {
 }
 
 export async function logOut() {
-    const token = cookies().get('token')?.value
+    //const token = cookies().get('token')?.value
     //console.log('.........', token)
     //cookies().delete('token');
     cookies().set('token', '', { maxAge: 0 })
 
-    if (token) {
+    if (0 && token) {
         await _MongoClientPromise.then(async (client) => {
             const dbRes = await client.db('book').collection('session').updateOne(
                 { _id: new ObjectId(token) },

@@ -22,7 +22,7 @@ export default function Auth() {
         <span className=" fa-regular fa-comments fa-fade fa-2xl text-primary" style={{}} ></span>
         <h1 className="h3 my-4 fw-normal">Please sign in</h1>
 
-        <form action={formAction} >
+        <form action={formAction} validate='n' >
           <div className="alert alert-warning py-2" role="alert">
             A simple primary alert—check it out!
           </div>
