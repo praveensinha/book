@@ -9,10 +9,7 @@ export function getJwtSecretKey() {
 
 export async function encryptData(data) {
     try {
-        return await new SignJWT(data)
-            .setProtectedHeader({ alg: "HS256" })
-            .setIssuedAt()
-            .sign(getJwtSecretKey());
+        return await new SignJWT(data).setProtectedHeader({ alg: "HS256" }).sign(getJwtSecretKey());
 
     } catch (e) {
         console.log(e)

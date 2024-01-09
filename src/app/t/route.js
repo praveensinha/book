@@ -4,14 +4,56 @@ import { ObjectId } from 'mongodb';
 import { faker } from '@faker-js/faker';
 import { encryptData, verifyJwtToken } from '@/lib/auth/jwt';
 
+import crypto from 'crypto';
+
+const iv = crypto.randomBytes(16);
+
+// Encryption function
+function encrypt(jsonData, secretKey) {
+    const cipher = crypto.createCipher('aes-256-cbc', secretKey);
+    let encryptedData = cipher.update(JSON.stringify(jsonData), 'utf-8', 'hex');
+    encryptedData += cipher.final('hex');
+    return encryptedData;
+}
+
+// Decryption function
+function decrypt(encryptedData, secretKey) {
+    const decipher = crypto.createDecipher('aes-256-cbc', secretKey);
+    let decryptedData = decipher.update(encryptedData, 'hex', 'utf-8');
+    decryptedData += decipher.final('utf-8');
+    return JSON.parse(decryptedData);
+}
+
+
+
+
 export async function GET(request, { params }) {
+    // Your JSON object
+    const jsonData = {
+        key1: new ObjectId("659969f04b6b449e3f533b73"),
+        key2: 'value2',
+        key3: 'value3'
+    };
+    const secretKey = 'praveenkumarsinhagfchgfhgfhfhfjhjhvgbgjgcfggf78687687687hgfhg7686';
+
+    // Encrypt the JSON data
+    const encryptedData = encrypt(jsonData, secretKey);
+    console.log('Encrypted Data:', encryptedData);
+
+    // Decrypt the encrypted data
+    const decryptedData = decrypt(encryptedData, secretKey);
+    console.log('Decrypted Data:', decryptedData);
+
+    return Response.json({})
+
+
     const { searchParams } = new URL(request.url)
-    const _i = searchParams.get('_i')
-    if (_i) {
-        var en = _i
-        var de = await verifyJwtToken(_i)
+    const _ = searchParams.get('_')
+    if (_) {
+        var en = _
+        var de = await verifyJwtToken(_)
     } else {
-        const data = { Org: 2345678910, interface: Date.now() }
+        const data = { Org: 2345678910, a: '63d8b7ffc1a965a0b213e94f', m: 'filter' }
 
         var en = await encryptData(data)
         var de = await verifyJwtToken(en)
@@ -45,3 +87,4 @@ export async function GET(request, { params }) {
 
     return Response.json(dummyData)
 }
+

@@ -9,6 +9,9 @@ import {Modal, Offcanvas} from './components'
 
 export default function RootLayout({ children }) {
 
+  const { data, error, isLoading } = useSWR(`/a/data/init`, fetcher)
+
+
   const pathname = usePathname().trim().split("/");
   const org = pathname[2];
   return (

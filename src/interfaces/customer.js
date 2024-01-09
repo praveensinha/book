@@ -148,9 +148,9 @@ module.exports = {
       </div>
     </div>
   </div>
-</div>
-    
-
-        `)
+</div>`)
+  },
+  filter: async function(d){
+    return d;
   }
 }
