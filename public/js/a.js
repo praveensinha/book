@@ -13,3 +13,9 @@ function a() {
         console.log('error in a.js', e)
     }
 }
+
+function _dataTable(i){
+    new DataTable(i.element, {
+        ajax: i.e
+    });
+}

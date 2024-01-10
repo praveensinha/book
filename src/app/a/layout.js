@@ -13,8 +13,6 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json())
 export default function RootLayout({ children }) {
 
   const { data, error, isLoading } = useSWR(`/a/fun/init`, fetcher)
-
-
   //const pathname = usePathname().trim().split("/");
   const pathname = usePathname()
 

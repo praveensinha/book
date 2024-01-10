@@ -1,5 +1,7 @@
+import { encryptData, verifyJwtToken } from '@/lib/auth/jwt';
+
 module.exports = {
-  index: function () {
+  index: async function () {
 
     //preaparation of a htmlStr
     htmlStr = `<h3 class="h3 lh-1 border-start border-primary border-5 border-opacity-50 py-0 ps-1 my-4 text-dark-emphasis ">Customer</h3>
@@ -65,8 +67,8 @@ module.exports = {
     <div class="mt-3  shadow-lg border " >
 
 
-    <table id="example" class="table" style="width:100%">
-    <thead class="sticky-top" >
+    <table id="contact_dt" class="table" style="width:100%">
+    <thead class="" >
     <tr>
     <th>Name</th>
     <th>Position</th>
@@ -123,7 +125,9 @@ module.exports = {
     serverSide: true
 });
 </Script>`;
-
+jsInitObj = {
+  dt:[{ele:'#contact_dt', e:await encryptData({org:'6767676', })}]
+}
 jsStr=`
 function _initPageJs(){
   alert(Date.now())
