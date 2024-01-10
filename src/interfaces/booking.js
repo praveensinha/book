@@ -1,16 +1,8 @@
 module.exports = {
   index: function () {
-    return (`
-    <h3 class="h3 lh-1 border-start border-primary border-5 border-opacity-50 py-0 ps-1 my-4 text-dark-emphasis ">Customer</h3>
-    
 
-    
-
-
-
-
-
-    
+    //preaparation of a htmlStr
+    htmlStr = `<h3 class="h3 lh-1 border-start border-primary border-5 border-opacity-50 py-0 ps-1 my-4 text-dark-emphasis ">Customer</h3>
     <div class="d-none row p-1" title="page filter" >
         <div class="col-auto" >
             <div class="input-group mb-0" style="">
@@ -60,8 +52,9 @@ module.exports = {
         <br>
       <button type="submit" class="btn btn-sm btn-primary">Submit</button>
 
-      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#dModal" _size="modal-xl" >dModal</button>
-      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#dModal" _size="modal-lg" >dModal</button>
+      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#dModal" _size="modal-xl" >modal-xl</button>
+      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#dModal" _size="modal-lg" >modal-lg</button>
+      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#dModal" _size="modal-fullscreen" >modal-fullscreen</button>
       <button type="button" _i=class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#dOffcanvas" aria-controls="offcanvasExample">
   Button with data-bs-target
 </button>
@@ -109,8 +102,12 @@ module.exports = {
         </tr>
     </tfoot>
 </table>
-    </div>    
+    </div>
+    <div id="script" > </div>
    <Script>
+   function a(){
+    console.log('assssssssssssssssssssssssssssss')
+   }
    alert(1)
    new DataTable('#example')
    new DataTable('#xxxexample', {
@@ -125,10 +122,16 @@ module.exports = {
     processing: true,
     serverSide: true
 });
-</Script>
+</Script>`;
 
-        `)
+jsStr=`
+function _initPageJs(){
+  alert(Date.now())
+}
+alert(1)
+`;
+
+    return ({htmlStr: htmlStr, jsStr: jsStr})
   },
-  filter : function()
-  {}
+  filter: function () { }
 }

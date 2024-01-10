@@ -4,21 +4,25 @@ import Link from 'next/link'
 import { logOut } from '@/lib/auth/server'
 import { usePathname } from 'next/navigation'
 
-import {Modal, Offcanvas} from './components'
+import { Modal, Offcanvas } from './components'
+
+import useSWR from 'swr'
+const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 
 export default function RootLayout({ children }) {
 
-  const { data, error, isLoading } = useSWR(`/a/data/init`, fetcher)
+  const { data, error, isLoading } = useSWR(`/a/fun/init`, fetcher)
 
 
-  const pathname = usePathname().trim().split("/");
-  const org = pathname[2];
+  //const pathname = usePathname().trim().split("/");
+  const pathname = usePathname()
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg border-bottom py-0" aria-label="Offcanvas navbar" style={{'background-image': 'linear-gradient(to right, rgb(156, 3, 3) , rgb(1, 1, 121))'}}>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg border-bottom py-0" aria-label="Offcanvas navbar" style={{ 'background-image': 'linear-gradient(to right, rgb(156, 3, 3) , rgb(1, 1, 121))' }}>
         <div className="container-fluid">
-          <Link className="navbar-brand" href="#"><i class="fa-solid fa-snowman fa-fade"></i></Link>
+          <Link className="navbar-brand" href="#">AirLink <i class="fa-solid fa-snowman fa-fade d-none"></i></Link>
           <button className="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
             <span className="fa fa-list"></span>
           </button>
@@ -29,16 +33,12 @@ export default function RootLayout({ children }) {
             </div>
             <div className="offcanvas-body">
               <ul className="navbar-nav me-auto flex-grow-1 pe-3">
-                <li className="nav-item">
-                  <Link className="nav-link active border-bottom border-3" aria-current="page" href={`/a/${org}/659112e03d55e893562b8c31`} >Home</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" href={`/a/${org}/637085413e3056d8da8130fa`}>chat</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" href={`/a/${org}/63d8b7ffc1a965a0b213e94f`} >Customer</Link>
-                </li>
 
+                {data?.map((menu, index) => (
+                  <li className="nav-item">
+                    <Link className={pathname.endsWith(menu.e) ? `nav-link active border-bottom border-3` : `nav-link`} aria-current="page" href={`/a/${menu.e}`} >{menu.name}</Link>
+                  </li>
+                ))}
               </ul>
 
             </div>
@@ -73,7 +73,6 @@ export default function RootLayout({ children }) {
       </main>
       <Modal />
       <Offcanvas />
-
     </>
   )
 }

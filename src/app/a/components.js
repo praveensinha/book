@@ -18,12 +18,13 @@ export function Modal({ e }) {
             modalDialog.remove('modal-sm')
             modalDialog.remove('modal-lg')
             modalDialog.remove('modal-xl')
+            modalDialog.remove('modal-fullscreen')
             modalDialog.add(_size)
         })
     }, [])
 
     return (
-        <div class="modal fade" id="dModal" tabindex="-1" aria-labelledby="dModalLabel" aria-hidden="true">
+        <div class="modal" id="dModal" tabindex="-1" aria-labelledby="dModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -33,16 +34,15 @@ export function Modal({ e }) {
                     <div class="modal-body">
                         {JSON.stringify(data)}
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                    <div class="modal-footer py-0">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-sm btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
         </div>
     )
 }
-
 
 
 export function Offcanvas() {

@@ -44,7 +44,7 @@ export async function doAuth(prevState, formData) {
         _d = { error: false, 'rId': dbRes }
     })
     console.log(formData.get('email'), formData.get('password'), _d);
-    redirect(`/a/${Date.now().toString()}`, 'replace');
+    redirect(`/a`, 'replace');
     return _d
 }
 

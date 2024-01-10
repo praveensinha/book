@@ -1,7 +1,9 @@
+export const dynamic = 'force-dynamic' // defaults to auto
+
 import * as functions from './functions';
 
 export async function GET(req, { params }) {
-    var _d = {}
+    let _d
     const { fun } = params
     if (fun) {
         _d = await functions[fun](req)

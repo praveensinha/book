@@ -4,20 +4,18 @@ import { ObjectId } from 'mongodb';
 import { encryptData, verifyJwtToken } from '@/lib/auth/jwt';
 
 export async function GET(req, { params }) {
-
-  const _e = await verifyJwtToken(params?.['b']?.[0])
+  const _e = await verifyJwtToken(params?.['_e'])
   let action = await loadAction(_e['a']);
-
   let _d
   if (action) {
-    console.log(params);
-    var program = require(`@/interfaces/${action['prog_path']}`);
+
+    //var program = require(`@/interfaces/${action['prog_path']}`);
+    var program = await import(`@/interfaces/${action['prog_path']}`);
     var _method = _e['m']
+    var _method = 'index'
     _d = await program[_method](_e);
   } else {
-    _d = `<div class='p-5 m-5'>
-  Dashboard, please select route
-      </div>`
+    _d = { msg: 'no action defined' }
   }
 
   return Response.json(_d);
@@ -47,15 +45,18 @@ export async function OPTIONS(request, { params }) {
 }
 
 async function loadAction(act) {
+
   try {
+    let r = {}
     await _MongoClientPromise.then(async (client) => {
       const _actionID = new ObjectId(act.toString())
-      return await client.db('book').collection("interface").findOne({ _id: _actionID })
+      r = await client.db('book').collection("interface").findOne({ _id: _actionID })
     });
+    return r;
   }
   catch (e) {
     console.log('ssdddcvevf', e)
-    return e
+    return {}
   }
 }
 async function _e(req, params) {
