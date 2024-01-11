@@ -11,9 +11,8 @@ export async function GET(req, { params }) {
 
     //var program = require(`@/interfaces/${action['prog_path']}`);
     var program = await import(`@/interfaces/${action['prog_path']}`);
-    var _method = _e['m']
-    var _method = 'index'
-    _d = await program[_method](_e);
+    var _method = _e['m'] ?? 'index'
+    _d = await program[_method](req, _e);
   } else {
     _d = { msg: 'no action defined' }
   }
@@ -40,6 +39,24 @@ export async function GET(req, { params }) {
   return Response.json({ html: Date.now() + _html })
   return new Response(JSON.stringify({ p: params, d: Date.now() }))
 }
+
+export async function POST(req, { params }) {
+  const _e = await verifyJwtToken(params?.['_e'])
+  let action = await loadAction(_e['a']);
+  let _d
+  if (action) {
+
+    //var program = require(`@/interfaces/${action['prog_path']}`);
+    var program = await import(`@/interfaces/${action['prog_path']}`);
+    var _method = _e['m'] ?? 'index'
+    _d = await program[_method](req, _e);
+  } else {
+    _d = { msg: 'no action defined' }
+  }
+
+  return Response.json(_d);
+}
+
 export async function OPTIONS(request, { params }) {
   return `lll`;
 }
@@ -59,6 +76,7 @@ async function loadAction(act) {
     return {}
   }
 }
+
 async function _e(req, params) {
   return await verifyJwtToken(params?.['b']?.[0])
 }

@@ -1,10 +1,13 @@
 import { encryptData, verifyJwtToken } from '@/lib/auth/jwt';
+import _MongoClientPromise from '@/lib/mongodb'
 
-module.exports = {
-  index: async function () {
 
-    //preaparation of a htmlStr
-    htmlStr = `<h3 class="h3 lh-1 border-start border-primary border-5 border-opacity-50 py-0 ps-1 my-4 text-dark-emphasis ">Customer</h3>
+export async function index() { }
+
+export async function html() {
+
+  //preaparation of a htmlStr
+  var htmlStr = `<h3 class="h3 lh-1 border-start border-primary border-5 border-opacity-50 py-0 ps-1 my-4 text-dark-emphasis ">Customer</h3>
     <div class="d-none row p-1" title="page filter" >
         <div class="col-auto" >
             <div class="input-group mb-0" style="">
@@ -71,19 +74,14 @@ module.exports = {
     <thead class="" >
     <tr>
     <th>Name</th>
-    <th>Position</th>
-    <th>Office</th>
-    <th>Extn.</th>
-    <th>Start date</th>
+    <th>phone</th>
+    <th>email</th>
     <th>Salary</th>
 </tr>
 </thead>
     </thead>
-    
-    <tfoot class="sticky-bottom" >
-        <tr>
-            <th colspan=6 >
-            <nav class="" aria-label="Page navigation example">
+</table>
+<nav class="" aria-label="Page navigation example">
   <ul class="pagination pagination-sm m-0">
     <li class="page-item">
       <a class="page-link" href="#" aria-label="Previous">
@@ -100,11 +98,8 @@ module.exports = {
     </li>
   </ul>
 </nav>
-            </th>
-        </tr>
-    </tfoot>
-</table>
     </div>
+    
     <div id="script" > </div>
    <Script>
    function a(){
@@ -125,17 +120,53 @@ module.exports = {
     serverSide: true
 });
 </Script>`;
-jsInitObj = {
-  dt:[{ele:'#contact_dt', e:await encryptData({org:'6767676', })}]
-}
-jsStr=`
+  var jsInitObj = {
+    dt: [{ ele: '#contact_dt', e: await encryptData({ org: '6767676', a: '637085413e3056d8da8130fa', m: 'filter' }) }]
+  }
+  var jsStr = `
 function _initPageJs(){
   alert(Date.now())
 }
 alert(1)
 `;
 
-    return ({htmlStr: htmlStr, jsStr: jsStr})
-  },
-  filter: function () { }
+  return ({ htmlStr: htmlStr, jsStr: jsStr, jsInitObj: jsInitObj })
+}
+
+export async function filter(req, _e) {
+
+  const post = await req.json()
+
+  let sendData = {}
+  sendData.data = [];
+  await _MongoClientPromise.then(async (client) => {
+
+
+    sendData.recordsTotal = sendData.recordsFiltered = await client.db('book').collection('contacts').countDocuments({ });
+
+    const dbRes = await client.db('book').collection('contacts').find({ }).limit(10).skip(post.start).toArray();
+    for (let i = 0; i < dbRes.length; i++) {
+      const row = dbRes[i]
+      const e = await encryptData({ org: '12312313', a: row._id.toString(), m: 'someaction' });
+      //_d.push({ name: row.info.name, e: _e })
+      (sendData.data).push([row.info.name, row.info.name, row.info.email, `<button className="btn" e=${e}>info</button>`])
+    }
+
+  })
+
+
+  return sendData
+
+  return ({
+    "data": [
+      [
+        "Tiger Nixon",
+        "System Architect",
+        "Edinburgh",
+        "5421",
+        "2011/04/25",
+        "$320,800"
+      ]
+    ]
+  })
 }

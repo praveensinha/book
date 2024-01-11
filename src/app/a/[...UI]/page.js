@@ -23,7 +23,7 @@ export default function A({ params }) {
         <script id='asassa'>
           {data.jsStr}
         </script>
-        <Script src="/js/a.js" onReady={() => { a() }} strategy="lazyOnload" ></Script>
+        <Script src="/js/a.js" onReady={() => { initJs(data?.jsInitObj) }} strategy="lazyOnload" ></Script>
       </>
     )
   }
