@@ -26,19 +26,26 @@ function a() {
 function _dataTable(ele) {
 
     try {
-        new DataTable(`${ele.ele}`, {
+        var _t = new DataTable(`${ele.ele}`, {
             processing: true,
             serverSide: true,
             searching: false,
             bLengthChange: false,
             conditionalPaging: true,
             scrollCollapse: false,
+            pagingTag: 'button',
+            //pagingType: "numbers",
+            columns: ele.col,
             ajax: {
                 url: `/a/e/${ele.e}`,
                 type: 'POST',
+                contentType: 'application/json',
                 data: function (request) {
                     request.myKey = 'myValue';
-                    //request.selection_block = "$('#adparam-selection').val()";
+                    //console.log($('#contact_filter').serializeArray())
+                    request.customFilter = $('#contact_filter').serializeArray()
+                    request.length = 12
+                    return JSON.stringify(request)
                 }
             }
         });
@@ -46,4 +53,10 @@ function _dataTable(ele) {
     catch (e) {
         console.log('error in datatable initialization >>>>>>>>>>>>', e)
     }
+    $('#kk').on( 'click', function () {
+        _t.draw();
+    } );
+
 } 
+
+

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { logOut } from '@/lib/auth/server'
 import { usePathname } from 'next/navigation'
 
-import { Modal, Offcanvas } from './components'
+import { Modal, Offcanvas, Profile, Relation } from './components'
 
 import useSWR from 'swr'
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
@@ -18,9 +18,9 @@ export default function RootLayout({ children }) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg border-bottom py-0" aria-label="Offcanvas navbar" style={{ 'background-image': 'linear-gradient(to right, rgb(156, 3, 3) , rgb(1, 1, 121))' }}>
+      <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow-lg border-bottom py-0" aria-label="Offcanvas navbar" style={{ 'backgroundImage': 'linear-gradient(to right, rgb(156, 3, 3) , rgb(1, 1, 121))' }}>
         <div className="container-fluid">
-          <Link className="navbar-brand" href="#">AirLink <i class="fa-solid fa-snowman fa-fade d-none"></i></Link>
+          <Link className="navbar-brand" href="#">AirLink <i className="fa-solid fa-snowman fa-fade d-none"></i></Link>
           <button className="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
             <span className="fa fa-list"></span>
           </button>
@@ -48,6 +48,10 @@ export default function RootLayout({ children }) {
                 <span className="input-group-text" id="inputGroup-sizing-sm"><i className='fa fa-search'></i></span>
               </div>
             </form>
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="offcanvas" data-bs-target="#dOffcanvas" aria-controls="dOffcanvas" >
+              <i class="fa-solid fa-user-plus"></i>
+            </button>
+            <button  className='openRelations btn btn-sm  btn-warning'> <i className='fa fa-search'></i></button>
             <div className="nav-item dropdown">
               <button className=" dropdown-toggle btn btn-sm btn-warning" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span className="fa fa-user"></span>
@@ -58,19 +62,23 @@ export default function RootLayout({ children }) {
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
-                <li><form action={logOut} ><button type="submit" className="dropdown-item" >Logout</button></form></li>
+                <li>
+                  <form action={logOut} ><button type="submit" className="dropdown-item" >Logout</button></form>
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </nav>
-      <main className=''>
+      <main className='pt-5'>
         <div className='container-fluid'>
           {children}
         </div>
       </main>
       <Modal />
       <Offcanvas />
+      <Profile />
+      <Relation />
     </>
   )
 }

@@ -41,6 +41,7 @@ export async function GET(req, { params }) {
 }
 
 export async function POST(req, { params }) {
+  //console.log(await req.json())
   const _e = await verifyJwtToken(params?.['_e'])
   let action = await loadAction(_e['a']);
   let _d
@@ -57,9 +58,6 @@ export async function POST(req, { params }) {
   return Response.json(_d);
 }
 
-export async function OPTIONS(request, { params }) {
-  return `lll`;
-}
 
 async function loadAction(act) {
 
