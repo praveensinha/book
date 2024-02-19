@@ -6,7 +6,7 @@ export async function create() {
   await new Promise(resolve => setTimeout(resolve, 300));
 
   var htmlStr = `
-    <form class="row g-3" validate='y' action="${await encryptData({ org: 123, a: '63e252810add1e7c6d309ba1', m: 'createDo' })}" >
+    <form class="row g-3 object_form" validate='y' action="${await encryptData({ org: 123, a: '63e252810add1e7c6d309ba1', m: 'createDo' })}" >
       <fieldset>
       <div class="col-md-12 mb-3">
         <label class="form-label">Name</label>

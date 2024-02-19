@@ -5,6 +5,13 @@ function initJs(jsInitObj) {
             _dataTable(ele)
         })
     }
+    if (jsInitObj?.hasOwnProperty('dr') && (jsInitObj?.dr).length > 0) {
+        alert(1)
+        $.each(jsInitObj.dr, (index, ele) => {
+            _daterange(ele)
+        })
+    }
+
 }
 
 function a() {
@@ -53,10 +60,13 @@ function _dataTable(ele) {
     catch (e) {
         console.log('error in datatable initialization >>>>>>>>>>>>', e)
     }
-    $('#kk').on( 'click', function () {
+    $('#kk').on('click', function () {
         _t.draw();
-    } );
+    });
 
-} 
+}
 
+function _daterange(ele) {
+    $(`${ele.ele}`).daterangepicker();
 
+}

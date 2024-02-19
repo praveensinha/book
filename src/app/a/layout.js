@@ -31,12 +31,13 @@ export default function RootLayout({ children }) {
             </div>
             <div className="offcanvas-body">
               <ul className="navbar-nav me-auto flex-grow-1 pe-3">
+                {isLoading ? <li className="nav-item">
+                  <span className='spinner-grow spinner-grow-sm'></span> </li> : data?.map((menu, index) => (
+                    <li className="nav-item">
+                      <Link className={pathname.endsWith(menu.e) ? `nav-link active border-bottom border-3` : `nav-link`} aria-current="page" href={`/a/${menu.e}`} >{menu.name}</Link>
+                    </li>
+                  ))}
 
-                {data?.map((menu, index) => (
-                  <li className="nav-item">
-                    <Link className={pathname.endsWith(menu.e) ? `nav-link active border-bottom border-3` : `nav-link`} aria-current="page" href={`/a/${menu.e}`} >{menu.name}</Link>
-                  </li>
-                ))}
               </ul>
 
             </div>
@@ -51,7 +52,7 @@ export default function RootLayout({ children }) {
             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="offcanvas" data-bs-target="#dOffcanvas" aria-controls="dOffcanvas" >
               <i class="fa-solid fa-user-plus"></i>
             </button>
-            <button  className='openRelations btn btn-sm  btn-warning'> <i className='fa fa-search'></i></button>
+            <button className='openRelations btn btn-sm  btn-warning'> <i className='fa fa-search'></i></button>
             <div className="nav-item dropdown">
               <button className=" dropdown-toggle btn btn-sm btn-warning" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span className="fa fa-user"></span>

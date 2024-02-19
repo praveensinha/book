@@ -3,7 +3,7 @@ $("form").submit(function (event) {
     alert("Submit prevented");
 });
 
-$(document).on("submit", "form", async function (event) {
+$(document).on("submit", "form.object_form", async function (event) {
     $f = $(this);
 
     var validate = $f.attr("validate");

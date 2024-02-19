@@ -32,7 +32,10 @@ export async function html() {
           <option value="3">Three</option>
         </select>
       </div>
-      
+      <div class="col-auto">
+        <label class="fw-light">Dates</label>
+        <input type="text" name="dates" class="form-control form-control-sm daterange" placeholder="Jane Doe">
+      </div>
       <div class="col-auto">
         <br>
       <button type="button" class="btn btn-sm btn-primary" id="kk" >Submit</button>
@@ -40,7 +43,7 @@ export async function html() {
       <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#dModal" _size="modal-xl" >modal-xl</button>
       <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#dModal" _size="modal-lg" >modal-lg</button>
       <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#dModal" _size="modal-fullscreen" >modal-fullscreen</button>
-      <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="offcanvas" data-bs-target="#dOffcanvas" aria-controls="dOffcanvas" _e=${await encryptData({org:123123, a:'63e252810add1e7c6d309ba1', m:'create'})} >
+      <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="offcanvas" data-bs-target="#dOffcanvas" aria-controls="dOffcanvas" _e=${await encryptData({ org: 123123, a: '63e252810add1e7c6d309ba1', m: 'create' })} >
           <i class="fa-solid fa-user-plus"></i>
         </button>
 
@@ -78,7 +81,12 @@ export async function html() {
       ele: '#contact_dt',
       col: [{ title: 'Name' }, { title: 'Name' }, { title: 'Name' }, { title: 'Name' }],
       e: await encryptData({ org: '6767676', a: '637085413e3056d8da8130fa', m: 'filter' })
-    }]
+    }],
+    dr: [
+      {
+        ele: '.daterange'
+      }
+    ]
   }
   var jsStr = `
 function _initPageJs(){
@@ -107,13 +115,13 @@ export async function filter(req, _e) {
       const e = await encryptData({ org: '12312313', a: row._id.toString(), m: 'someaction' });
       //_d.push({ name: row.info.name, e: _e })
       (sendData.data).push([
-        row.info.name, 
-        row.info.name, 
-        row.info.email, 
+        row.info.name,
+        row.info.name,
+        row.info.email,
         `
         <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#profileModal" _size="modal-xl" e=${e}><i class="fa-solid fa-eye"></i></button>
         <button type="button" class="btn btn-warning btn-sm openRelations" e=${e} ><i class="fa-solid fa-diagram-project"></i></button>
-        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="offcanvas" data-bs-target="#dOffcanvas" aria-controls="dOffcanvas" _e=${await encryptData({org:123123, a:'63e252810add1e7c6d309ba1', m:'create'})} >
+        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="offcanvas" data-bs-target="#dOffcanvas" aria-controls="dOffcanvas" _e=${await encryptData({ org: 123123, a: '63e252810add1e7c6d309ba1', m: 'create' })} >
           <i class="fa-solid fa-user-plus"></i>
         </button>
         `])

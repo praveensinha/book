@@ -30,7 +30,7 @@ export function Modal({ e }) {
         <div className="modal" id="dModal" tabIndex="-1" aria-labelledby="dModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-scrollable">
                 <div className="modal-content">
-                    <div className="modal-header">
+                    <div className="modal-header shadow-sm">
                         <h1 className="modal-title fs-5" id="dModalLabel">Modal title</h1>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -86,7 +86,7 @@ export function Offcanvas() {
                         </div>
                     </div>
                 ) :
-                    (<><div className="offcanvas-header border-bottom bg-light shadow">
+                    (<><div className="offcanvas-header border-bottom bg-light shadow-sm">
                         <h5 className="offcanvas-title" id="offcanvasExampleLabel">{data?.hTitle}</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
@@ -125,19 +125,19 @@ export function Profile() {
         })
 
     }, [])
-    
+
 
     useEffect(() => {
 
         const tabEl = document.querySelector('button[data-bs-toggle="tab"]')
         tabEl?.addEventListener('shown.bs.tab', event => {
-          event.target // newly activated tab
-          event.relatedTarget // previous active tab
-          alert(1)
+            event.target // newly activated tab
+            event.relatedTarget // previous active tab
+            alert(1)
         })
 
     }, [data?.operation])
-    
+
 
     return (
 
@@ -289,7 +289,7 @@ export function Relation() {
                 <div className="d-flex flex-column vh-100 border-end pt-5">
                     <div className="overflow-y-auto">
                         <div className="list-group list-group-flush">
-                            <div className=" px-3 py-2 sticky-top bg-transparent" >
+                            <div className=" px-3 py-2 sticky-top bg-transparent shadow-sm" >
                                 <h3 className=''>
                                     <span className="badge bg-primary shadow-lg">Contact</span>
                                     <span type="button" onClick={close} className="ms-auto badge bg-danger float-end">X</span>
